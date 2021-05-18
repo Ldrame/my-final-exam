@@ -1,22 +1,52 @@
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+    otherSprite.setPosition(otherSprite.x - otherSprite.vx, otherSprite.y - otherSprite.vy)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    MyHeart.setPosition(randint(0, 100), randint(0, 100))
+    info.changeScoreBy(1)
+})
+let MyHeart: Sprite = null
+MyHeart = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . f f f f f . f f f f f . . 
+    . . f f 3 3 3 f f f 3 3 3 f f . 
+    . . f 3 3 3 3 3 f 3 3 3 3 3 f . 
+    . . f 3 3 3 3 3 3 3 1 1 3 3 f . 
+    . . f 3 3 3 3 3 3 3 1 1 3 3 f . 
+    . . f 3 3 3 3 3 3 3 3 3 3 3 f . 
+    . . f f 3 3 3 b b b 3 3 3 f f . 
+    . . . f f 3 b b b b b 3 f f . . 
+    . . . . f f b b b b b f f . . . 
+    . . . . . f f b b b f f . . . . 
+    . . . . . . f f b f f . . . . . 
+    . . . . . . . f f f . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Food)
+MyHeart.setPosition(116, 15)
 let Mutated_human = sprites.create(img`
-    e e e e e e e e e e e e e e e 
-    e e e e e e e e e e e e e e e 
-    e e e e e e e e e e e e e e e 
-    e e e e e e e e e e e e e e e 
-    e e e f f f f f f e e e e e e 
-    e e f f e f f e f f e e e e e 
-    e e f e e e e e e f f e e e e 
-    e e f e f e e f e e f e e e e 
-    e e f e e e e e e e f e e e e 
-    e e f f e f f f e e f e e e e 
-    e e e f f f f f f f f e e e e 
-    e e e e f e e e e f e e e e e 
-    e e e e f e e e e f e e e e e 
-    e f f f f e e e e f f f f e e 
-    e f e e e e e e e e e e f e e 
+    . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . 
+    . . . f f f f f f . . . . . . 
+    . . f f . f f . f f . . . . . 
+    . . f . . . . . . f f . . . . 
+    . . f . f . . f . . f . . . . 
+    . . f . . . . . . . f . . . . 
+    . . f f . f f f . . f . . . . 
+    . . . f f f f f f f f . . . . 
+    . . . . f . . . . f . . . . . 
+    . . . . f . . . . f . . . . . 
+    . f f f f . . . . f f f f . . 
+    . f . . . . . . . . . . f . . 
     `, SpriteKind.Player)
+Mutated_human.say("AHHH", 500)
 controller.moveSprite(Mutated_human)
-Mutated_human.say("time to do my morning run", 2000)
+Mutated_human.setBounceOnWall(true)
+info.setLife(5)
 scene.setBackgroundImage(img`
     eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -170,8 +200,10 @@ let plate = sprites.create(img`
     ......11111111111111111111....
     .........1111111111111111.....
     ..............................
-    `, SpriteKind.Player)
-plate.setPosition(24, 73)
+    `, SpriteKind.Enemy)
+plate.setPosition(0, 73)
+plate.setVelocity(-31, 23)
+plate.setBounceOnWall(true)
 let cone = sprites.create(img`
     ..............................
     ..............................
@@ -203,8 +235,10 @@ let cone = sprites.create(img`
     f................f............
     f................f............
     ffffffffffffffffff............
-    `, SpriteKind.Player)
-cone.setPosition(73, 83)
+    `, SpriteKind.Enemy)
+cone.setPosition(0, 83)
+cone.setBounceOnWall(true)
+cone.setVelocity(-40, 66)
 let plunger = sprites.create(img`
     . . . . . . . c d . . . . . . . 
     . . . . . . . c d . . . . . . . 
@@ -222,8 +256,10 @@ let plunger = sprites.create(img`
     . c c c c e e 2 2 2 2 4 2 e e . 
     c c c c c c e e 2 2 2 4 2 2 e e 
     c c c c c c e e 2 2 2 2 4 2 e e 
-    `, SpriteKind.Player)
-plunger.setPosition(77, 23)
+    `, SpriteKind.Enemy)
+plunger.setPosition(20, 75)
+plunger.setVelocity(58, -52)
+plunger.setBounceOnWall(true)
 let relic = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . 6 6 6 6 . . . . . . 
@@ -241,31 +277,10 @@ let relic = sprites.create(img`
     . . . . 6 6 8 8 8 8 6 6 . . . . 
     . . . . . . 6 6 6 6 . . . . . . 
     . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Player)
+    `, SpriteKind.Enemy)
 relic.setPosition(128, 35)
-let tree = sprites.create(img`
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    ....................
-    `, SpriteKind.Player)
-tree.setPosition(33, 32)
+relic.setVelocity(44, 32)
+relic.setBounceOnWall(true)
 let ball = sprites.create(img`
     . . . . . b b b b b b . . . . . 
     . . . b b 9 9 9 9 9 9 b b . . . 
@@ -283,5 +298,29 @@ let ball = sprites.create(img`
     . . b d 5 d 3 3 3 3 5 5 b b . . 
     . . . b b 5 5 5 5 5 5 b b . . . 
     . . . . . b b b b b b . . . . . 
-    `, SpriteKind.Player)
+    `, SpriteKind.Enemy)
+ball.setPosition(128, 35)
+ball.setVelocity(-94, -85)
+ball.setBounceOnWall(true)
 ball.setPosition(129, 79)
+let trash = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Enemy)
+trash.setBounceOnWall(true)
+trash.setVelocity(0, 0)
+trash.setPosition(28, 42)
